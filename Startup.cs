@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -8,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using WebAPI_Prac.Models;
 
 namespace WebAPI_Prac
 {
@@ -24,6 +26,11 @@ namespace WebAPI_Prac
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
+
+            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
+            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
+            services.Configure<ModelConnectionString>(Configuration.GetSection("ConnectionStrings"));
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -50,7 +57,7 @@ namespace WebAPI_Prac
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Registeration}/{action=Index}/{id?}");
+                    pattern: "{controller=Registeration}/{action=Register}/{id?}");
             });
         }
     }

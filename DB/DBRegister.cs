@@ -19,10 +19,10 @@ namespace WebAPI_Prac.DB
             {
                 con.Open();
                 List<ModelRegister> test = new List<ModelRegister>();
-                SqlCommand cmd = new SqlCommand("usp_RegisterFormAE", con);
+                SqlCommand cmd = new SqlCommand("usp_RegisterFormSD", con);
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.Add("@Id", SqlDbType.Int).Value = 0;
-                cmd.Parameters.Add("@Type", SqlDbType.VarChar).Value = "A";
+                cmd.Parameters.Add("@Type", SqlDbType.VarChar).Value = "S";
                 SqlDataReader dr = cmd.ExecuteReader();
                 while (dr.Read())
                 {
@@ -122,6 +122,7 @@ namespace WebAPI_Prac.DB
                 }
                 SqlCommand cmd = new SqlCommand("usp_RegisterFormAE", con);
                 cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@Id", stud.Id.ToString());
                 cmd.Parameters.AddWithValue("@Firstname", stud.Firstname.ToString());
                 cmd.Parameters.AddWithValue("@Lastname", stud.Lastname.ToString());
                 cmd.Parameters.AddWithValue("@Addressline1", stud.Addresline1.ToString());
@@ -141,7 +142,7 @@ namespace WebAPI_Prac.DB
         }
 
         // DELETE For Deleting
-        public string Delete(int id,string deletedby,string ConnectionString)
+        public string Delete(int id,string ConnectionString)
         {
             using (SqlConnection con = new SqlConnection(ConnectionString))
             {

@@ -12,5 +12,10 @@ namespace WebAPI_Prac.Controllers
         {
             return View();
         }
+
+        public IActionResult Register()
+        {
+            return View();
+        }
     }
 }

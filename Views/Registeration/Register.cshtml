@@ -1,10 +1,10 @@
-﻿@{
-        ViewData["Title"] = "Index";
-        Layout = "~/Views/Shared/_Layout.cshtml";
+﻿
+@{
+    ViewData["Title"] = "Register";
+    Layout = "~/Views/Shared/_LayoutForm.cshtml";
 }
 
-
-<h1 class="text-center">Student Registration</h1>
+<h1 class="text-center">New Student Registration</h1>
 <div class="container mt-3">
     <div id="message"></div>
 
@@ -219,7 +219,7 @@
                 "background": ""
             })
         }
-      
+
         // Validate Gender
         if ($.trim((txtGender).val()) == 0 || $.trim((txtGender).val()) == null) {
             isValid = false;

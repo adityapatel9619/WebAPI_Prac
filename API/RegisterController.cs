@@ -11,44 +11,58 @@ using Microsoft.Extensions.Options;
 
 namespace WebAPI_Prac.API
 {
-    [Route("api/[controller]")]
+    [Route("api/[controller]/[Action]")]
     [ApiController]
     public class RegisterController : ControllerBase
     {
         DB.DBRegister datatest = new DB.DBRegister();
 
         private readonly IOptions<ModelConnectionString> appsettings;
+        public RegisterController(IOptions<ModelConnectionString> app)
+        {
+            appsettings = app;
+        }
 
-        // GET: api/<RegisterController>
+
+
+        // GET: api/Register/GetRegisterList
         [HttpGet]
-        public IEnumerable<string> Get()
+        [ActionName("GetRegisterList")]
+        public IEnumerable<ModelRegister> GetRegisterdList()
         {
-            return new string[] { "value1", "value2" };
+            return datatest.GetRegisterList(appsettings.Value.DefaultConnection);
         }
 
-        // GET api/<RegisterController>/5
-        [HttpGet("{id}")]
-        public string Get(int id)
+        // EDIT api/Register/EditRegisterList
+        [HttpGet]
+        [ActionName("EditRegisterList")]
+        public IEnumerable<ModelRegister> EditRegisteredList(int id)
         {
-            return "value";
+            return datatest.EditRegisterList(id,appsettings.Value.DefaultConnection);
         }
 
-        // POST api/<RegisterController>
+        // POST api/Register/SaveRegister
         [HttpPost]
-        public void Post([FromBody] string value)
+        [ActionName("SaveRegister")]
+        public string Post(ModelRegister stud)
         {
+            return datatest.Post(stud, appsettings.Value.DefaultConnection);
         }
 
-        // PUT api/<RegisterController>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        // PUT api/Register/UpdateRegister
+        [HttpPut]
+        [ActionName("UpdateRegister")]
+        public string Put(ModelRegister stud)
         {
+            return datatest.Put(stud, appsettings.Value.DefaultConnection);
         }
 
-        // DELETE api/<RegisterController>/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
+        // DELETE api/Register/DeleteRegister
+        [HttpDelete]
+        [ActionName("DeleteRegister")]
+        public string Delete(int id)
         {
+            return datatest.Delete(id, appsettings.Value.DefaultConnection);
         }
     }
 }
