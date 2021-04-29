@@ -1,0 +1,237 @@
+﻿@{
+        ViewData["Title"] = "Index";
+        Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<h1 class="text-center">Student Registration</h1>
+<div class="container mt-3">
+    <div id="message"></div>
+
+    <div id="dvFormdetails">
+        <!-- For Name -->
+        <div class="row">
+            <!-- First Name -->
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="txtFName" class="font-weight-bold">First Name</label>
+                    <input type="text" class="form-control" id="txtFName" placeholder="Enter First Name">
+                </div>
+            </div>
+
+            <!-- For Last Name -->
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="txtLName" class="font-weight-bold">Last Name</label>
+                    <input type="text" class="form-control" id="txtLName" placeholder="Enter Last Name">
+                </div>
+            </div>
+        </div>
+
+        <!-- For Address Line 1 -->
+        <div class="row">
+            <div class="col-md-12">
+                <label for="txtAdd" class="font-weight-bold">Address Line 1</label>
+                <input type="text" class="form-control" id="txtAdd" placeholder="Enter Address Line 1">
+            </div>
+        </div>
+
+        <!-- For Address Line 2 -->
+        <div class="row mt-3">
+            <div class="col-md-12">
+                <label for="txtAdd2" class="font-weight-bold">Address Line 2</label>
+                <input type="text" class="form-control" id="txtAdd2" placeholder="Enter Address Line 2">
+            </div>
+        </div>
+
+
+        <!-- For Contact Numbers -->
+        <div class="row mt-3">
+            <!-- Phone Number -->
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="txtPhNo" class="font-weight-bold">Phone Number</label>
+                    <input type="text" class="form-control" id="txtPhNo" placeholder="Enter Phone Number">
+                </div>
+            </div>
+
+            <!-- For Alternate Number -->
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="txtAlthNo" class="font-weight-bold">Alternate Number</label>
+                    <input type="text" class="form-control" id="txtAlthNo" placeholder="Enter Alternate Number">
+                </div>
+            </div>
+        </div>
+
+        <!-- For BirthDate & Gender -->
+        <div class="row mt-3">
+
+            <!-- For Birthdate -->
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="txtDob" class="font-weight-bold">Date Of Birth</label>
+                    <input class="form-control" type="date" id="txtDob">
+                </div>
+            </div>
+
+            <!-- For Age -->
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="txtAge" class="font-weight-bold">Enter Age</label>
+                    <input type="text" class="form-control" id="txtAge" placeholder="Enter Enter Age" disabled>
+                </div>
+            </div>
+
+            <!-- Select Gender -->
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="ddlGender">State</label>
+                    <select class="custom-select" id="ddlGender">
+                        <option selected value="0">Select Gender</option>
+                        <option value="Male">Male</option>
+                        <option value="Female">Female</option>
+                        <option value="Other">Others</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <button type="button" class="btn btn-success mt-3" id="btnSubmit">Submit</button>
+        <button type="button" class="btn btn-danger mt-3" id="btnCancel">Cancel</button>
+
+
+    </div>
+</div>
+
+<script>
+
+    $(document).ready(function () {
+        disableAge();
+        $('#btnSubmit').click(function () {
+            FormValidate();
+            //calculateAge();
+        });
+
+        $('#txtDate').click(function () {
+            //calculateAge();
+        });
+    })
+    function FormValidate() {
+        var isValid = true;
+        var txtFirstName = $('#txtFName');
+        var txtLastName = $('#txtLName');
+        var txtAddress1 = $('#txtAdd');
+        var txtAddress2 = $('#txtAdd2');
+        var txtDate = $('#txtDate');
+        var txtAge = $('#txtAge');
+        var txtMobile = $('#txtPhNo');
+        var txtGender = $('#ddlGender');
+        // Validate Firstname
+        if ($.trim((txtFirstName).val()) == "" || $.trim((txtFirstName).val()) == null) {
+            isValid = false;
+            $(txtFirstName).css({
+                "border": "1px solid red",
+                "background": "#FFCECE"
+            });
+        }
+        else {
+            $(txtFirstName).css({
+                "border": "",
+                "background": ""
+            });
+        }
+        // Validate Lastname
+        if ($.trim((txtLastName).val()) == "" || $.trim((txtLastName).val()) == null) {
+            isValid = false;
+            $(txtLastName).css({
+                "border": "1px solid red",
+                "background": "#FFCECE"
+            });
+        }
+        else {
+            $(txtLastName).css({
+                "border": "",
+                "background": ""
+            });
+        }
+        // Validate Address
+        if ($.trim((txtAddress1).val()) == "" || $.trim((txtAddress1).val()) == null) {
+            isValid = false;
+            $(txtAddress1).css({
+                "border": "1px solid red",
+                "background": "#FFCECE"
+            })
+        }
+        else {
+            $(txtAddress1).css({
+                "border": "",
+                "background": ""
+            })
+        }
+        // Validate DoB
+        if ($.trim((txtDate).val()) == "" || $.trim((txtDate).val()) == null) {
+            isValid = false;
+            $(txtDate).css({
+                "border": "1px solid red",
+                "background": "#FFCECE"
+            })
+        }
+        else {
+            $(txtDate).css({
+                "border": "",
+                "background": ""
+            })
+
+            //$('#txtAge').html('');
+        }
+        // Validate Mobile Number
+        if ($.trim((txtMobile).val()) == 0 || $.trim((txtMobile).val()) == null) {
+            isValid = false;
+            $(txtMobile).css({
+                "border": "1px solid red",
+                "background": "#FFCECE"
+            })
+        }
+        else {
+            $(txtMobile).css({
+                "border": "",
+                "background": ""
+            })
+        }
+      
+        // Validate Gender
+        if ($.trim((txtGender).val()) == 0 || $.trim((txtGender).val()) == null) {
+            isValid = false;
+            $(txtGender).css({
+                "border": "1px solid red",
+                "background": "#FFCECE"
+            })
+        }
+        else {
+            $(txtGender).css({
+                "border": "",
+                "background": ""
+            })
+        }
+    }
+
+    function disableAge() {
+        // Disables the age text field
+        $('#txtDate').click(function () {
+            $('#txtAge').prop('disabled', true);
+        });
+    }
+
+    function calculateAge() {
+        var dob = $('#txtDate').val();
+        // Parsing dob
+        dob = new Date(dob);
+        var today = new Date();
+        var age = Math.floor((today - dob) / (365.25 * 24 * 60 * 60 * 1000));
+        $('#txtAge').html(age);
+        //alert(age);
+
+    }
+</script>
+
