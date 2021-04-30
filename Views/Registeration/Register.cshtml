@@ -97,28 +97,10 @@
             </div>
         </div>
 
-        <button type="button" class="btn btn-success mt-3" id="btnSubmit">Submit</button>
+        <button type="button" class="btn btn-success mt-3" id="btnSubmit" value="save">Submit</button>
         <button type="button" class="btn btn-danger mt-3" id="btnCancel">Cancel</button>
 
 
-    </div>
-
-    <div id="displayData" class="mt-4">
-        <table class="table table-striped">
-            <thead id="tblhead">
-                <tr>
-                    <th>FirstName</th>
-                    <th>LastName</th>
-                    <th>City</th>
-                    <th>Country</th>
-                    <th>Phone Number</th>
-                    <th>Alternate Number</th>
-                    <th>Date Of Birth</th>
-                    <th>Gender</th>
-                </tr>
-            </thead>
-            <tbody id="tblbody"></tbody>
-        </table>
     </div>
 </div>
 
@@ -129,21 +111,25 @@
         $('#btnSubmit').click(function () {
             FormValidate();
             //calculateAge();
+            
         });
 
         $('#txtDate').click(function () {
             //calculateAge();
         });
 
-        DestroyRegisteredList();
     })
+
     function FormValidate() {
+
         var isValid = true;
+
+
         var txtFirstName = $('#txtFName');
         var txtLastName = $('#txtLName');
         var txtAddress1 = $('#txtAdd');
         var txtAddress2 = $('#txtAdd2');
-        var txtDate = $('#txtDate');
+        var txtDate = $('#txtDob');
         var txtAge = $('#txtAge');
         var txtMobile = $('#txtPhNo');
         var txtGender = $('#ddlGender');
@@ -234,6 +220,16 @@
                 "background": ""
             })
         }
+
+
+        
+            if ($('#btnSubmit').val() == "save") {
+                SaveEntry();
+            }
+            else {
+                location.reload();
+
+            }
     }
 
     function disableAge() {
@@ -251,57 +247,49 @@
         var age = Math.floor((today - dob) / (365.25 * 24 * 60 * 60 * 1000));
         $('#txtAge').html(age);
         //alert(age);
-
     }
 
+    // For Saving Entry
 
-    // Check Data
-
-    function DestroyRegisteredList() {
-        if (typeof tblregister != 'undefined') {
-
-            tblregister.destroy();
-            RegisteredList();
-        }
-        else {
-            RegisteredList();
-        }
-
-
-        function RegisteredList() {
-            $("#tblbody").html('');
-            var strdata = '';
-            jQuery.support.cors = true;
-            $.ajax({
-                url: '/api/Register/GetRegisterList',
-                type: 'GET',
-                contentType: 'application/json',
-                success: function (data) {
-                    var sr = 0;
-                    $.each(data, function (key, item) {
-
-                        sr += 1;
-                        strdata = "<tr>" +
-                            "<td>" + item.firstname + "</td>" +
-                            "<td>" + item.lastname + "</td>" +
-                            "<td>" + item.addresline1 + "</td>" +
-                            "<td>" + item.addressline2 + "</td>" +
-                            "<td>" + item.phonenumber + "</td>" +
-                            "<td>" + item.alternatenumber + "</td>" +
-                            "<td>" + item.dob + "</td>" +
-                            "<td>" + item.gender + "</td>" +
-                            "</tr>";
-
-                        $("#tblbody").append(strdata);
-
-                    })
-                },
-                error: function (jqXHR, textStatus, err) {
-                    alert(err);
-                }
-            })
+    function SaveEntry() {
+        var NewEntry = {
+            firstname: $('#txtFName').val(),
+            lastname: $('#txtLName').val(),
+            addresline1: $('#txtAdd').val(),
+            addressline2: $('#txtAdd2').val(),
+            phonenumber: $('#txtPhNo').val(),
+            alternatenumber: $('#txtAlthNo').val(),
+            dob: $('#txtDob').val(),
+            gender: $('#ddlGender').val(),
+            userid: "1",
         }
 
+        var ajaxRequest = $.ajax({
+            url: '/api/Register/SaveRegister',
+            type: 'POST',
+            data: JSON.stringify(NewEntry),
+            contentType: 'application/json',
+            success: function (data) {
+                alert(data);
+                ClearData();
+                DestroyRegisteredList();
+            },
+            error: function (jqXHR, textStatus, err) {
+                alert(err);
+            }
+        });
     }
+
+    function ClearData() {
+            $('#txtFName').val(''),
+            $('#txtLName').val(''),
+            $('#txtAdd').val(''),
+            $('#txtAdd2').val(''),
+            $('#txtPhNo').val(''),
+            $('#txtAlthNo').val(''),
+            $('#txtDob').val(''),
+            $('#ddlGender').val('')
+    }
+   
 </script>
 
